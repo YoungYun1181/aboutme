@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>프로젝트</title>
+  <script src="jquery-1.9.1.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
+  <style>
+  @font-face {
+      font-family: "Noto Sans", sans-serif;
+      src: url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital@0;1&display=swap');
+      font-weight: 400;
+      font-style: normal;
+  }
+  @font-face {
+      font-family: "Noto Sans KR", sans-serif;
+      src: url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+      font-weight: 400;
+      font-style: normal;
+  }
+  *{margin: 0;padding: 0;}
+  * ul{list-style: none;}
+  * li{color:#000;}
+  * a{text-decoration: none;}
+  html{overflow-x: hidden;}
+  /* 1024 이상일 때  => 데스크탑 */
+  @media screen and (min-width:1024px) {
+    /* header */
+    #header{
+        position: relative;
+        display: flex;
+        align-items:center;
+        justify-content: center;
+    }
+    /* #header img{
+        max-width:100px;
+        max-height:auto;
+        position: fixed;
+        top:1%;
+        left:1%;
+    } */
+    #hoverZone {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 50px; 
+        height: 100vh;
+        z-index: 9999;
+    }
+    #toggle{
+        display: none;
+        position: fixed;
+        top:0;
+        left:0;
+        background:url(toggleAboveImage.jpg)no-repeat top,url(toggleUnderImage.jpg)no-repeat bottom;
+        background-size: 280px 200px;
+        background-color: #000;
+        filter:opacity(60%);
+        width:280px;
+        height:100%;
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        justify-content:center; 
+    }
+    #toggle ul {
+        display: flex;          
+        align-items:center;
+        flex-direction: column;
+    }
+    #toggle a{
+        color:#fff;
+    }
+    .lang {
+        position: relative;
+        display: inline-block;
+    }
+    .lang>li, .lang>ul>li>a{
+        color:#fff;
+    }
+    /* 화살표 기본 (아래쪽) */
+    .lang-selected .arrow {
+        display: inline-block;
+        margin: 0;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid #fff; 
+        /* ▼ */
+        transition: transform 0.3s ease;
+    }
+
+    /* hover 시 오른쪽 ▶ */
+    .lang-selected:hover .arrow {
+        transform:rotateX(90deg);
+        border-top: none;
+        border-left: 6px solid #fff;
+        border-bottom: 6px solid transparent;
+        border-top: 6px solid transparent;
+    }
+
+    /* 옵션 숨김 */
+    .lang-options {
+        display: none;
+        position: absolute;
+        top: -13%;
+        left: 103%;
+        background: rgba(0,0,0,0.5);
+        list-style: none;
+        padding: 5px 0;
+        margin: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    .lang-options li {
+        padding: 1px 5px;
+    }
+
+    .lang-options li a {
+        color: #fff;
+        display: block;
+    }
+
+    .lang-options li:hover {
+        background: rgba(0,0,0,0.5);
+    }
+
+    /* hover 시 옵션 표시 */
+    .lang-selected:hover .lang-options {
+        display: block;
+    }
+
+    .lang,.menu{
+        margin:35px auto;
+    }
+    #toggle li{
+        margin:8px auto;
+    }  
+    .menu{
+        width:60%;
+        text-align: center;
+    }
+    .menuItem{
+        border-bottom: 1px solid #fff;
+        width:100%;
+    }
+    .menuItem a{justify-content: center;}
+    
+    /* prjContents */
+    #prjContents{
+        position: relative;
+        width: 100vw;
+        height:100%;      
+    }
+    #prjContents>h3{
+        text-align: center;
+    }
+    .prj{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items:center;
+    }
+    .prj>ul{
+        background: #ebc797;
+        border-radius: 30px;
+        padding:10px;
+    }
+    .prj>a>ul>li{
+        float:left;
+        display: flex;
+        justify-content: center;
+        width: 100vw;
+        height:auto;
+        border:1px solid #000;
+        position: relative;
+    }
+    .prj>a>ul>li>img{
+        margin-bottom:30px;
+        display: flex;
+        flex-direction: column;
+        display: block;
+        float:left;
+    }
+    /* .prj>a>ul>li>img:hover{
+        scale:150%;
+        position: absolute;
+        top:150px;
+    } */
+    .prj>a>ul>li>ul{
+        display: block;
+        float:left;
+    }
+    .prj1>a>ul>li>img,.prj2>a>ul>li>img{
+        width: 350px;
+        height: 700px;
+        border: 1px solid #999;
+    }
+    .prj3>a>ul>li>img{
+        width:700px;
+        height: 350px;
+        border:1px solid #999;
+    }
+    ul.pjt01text01{
+        /* border:1px solid #999; */
+        display: fixed;
+        width: 800px;
+        height: 700px;
+        float:left;
+        margin-left:100px;
+    }
+    .pjt01text01 p{
+        color:#000;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+    .pjt01text01 img{
+        float:left;
+    }
+    .pjt01text01>li{
+        list-style: square;
+        margin:10px 0;
+    }
+    .ssootrLogo{
+        width:100px;
+        height:40px;
+        display: block;
+    }
+    .ssootrLogo:hover{
+        scale:210%;
+    }
+    .prj>a>ul>li:first-child img{
+        display: block;
+        float:left;
+    }
+    /* ------------- */
+    ul.pjt01text02{
+        /* border:1px solid #999; */
+        display: fixed;
+        width: 800px;
+        height: 700px;
+        float:left;
+        margin-left:100px;
+    }
+    .pjt01text02 p{
+        color:#000;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+    .pjt01text02 img{
+        float:left;
+    }
+    .pjt01text02>li{
+        list-style: square;
+        margin:10px 0;
+    }
+    /* ------------ */
+    ul.pjt01text03{
+        /* border:1px solid #999; */
+        display: fixed;
+        width: 800px;
+        height: 700px;
+        float:left;
+        margin-left:100px;
+    }
+    .pjt01text03 p{
+        color:#000;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+    .pjt01text03 img{
+        float:left;
+    }
+    .pjt01text03>li{
+        list-style: square;
+        margin:10px 0;
+    }
+    /* ------------ */
+    ul.pjt01text04{
+        /* border:1px solid #999; */
+        display: fixed;
+        width: 800px;
+        height: 700px;
+        float:left;
+        margin-left:100px;
+    }
+    .pjt01text04 p{
+        color:#000;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+    .pjt01text04 img{
+        float:left;
+    }
+    .pjt01text04>li{
+        list-style: square;
+        margin:10px 0;
+    }
+    /* ======================= */
+    ul.pjt02text{
+        /* border:1px solid #999; */
+        display: fixed;
+        width: 800px;
+        height: 700px;
+        float:left;
+        margin-left:100px;
+    }
+    .pjt02text p{
+        color:#000;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+    .pjt02text img{
+        float:left;
+    }
+    .pjt02text>li{
+        list-style: square;
+        margin:10px 0;
+    }
+    .ddkcLogo{
+        width:100px;
+        height:40px;
+        display: block;
+    }
+    .ddkcLogo:hover{
+        scale:210%;
+    }
+    .prj>a>ul>li:first-child img{
+        display: block;
+        float:left;
+    }
+    .prj2>a>ul>li>ul>.pjt02hpimg{
+        list-style: none;
+    }
+    .pjt02hpimg>li>img{
+        width: 190px;
+        height:500px;
+        margin:0 5px;
+        display: block;
+    }
+    .pjt02hptext{
+        list-style: square;
+    }
+    .pjt02hptext>li{
+        width: 350px;
+        float:left;
+        margin-left: 20px;
+    }
+    /* ======================= */
+    ul.pjt03text{
+        /* border:1px solid #999; */
+        display: fixed;
+        width: 800px;
+        height: auto;
+        float:left;
+        margin-left:100px;
+    }
+    .pjt03text p{
+        color:#000;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+    .pjt03text>li{
+        list-style: square;
+        margin:10px 0;
+    }
+    .ddmLogo{
+        width:50px;
+        height:50px;
+        display: block;
+        float:left;
+    }
+    .ddmLogo:hover{
+        scale:210%;
+    }
+    .prj3>a>ul>li{
+        width:100vw;
+        height: auto;
+    }
+    .prj3>a>ul>li:first-child>img{
+        display: block;
+        float:left;        
+        width:700px;
+        height:350px;
+    }
+
+    /* footer style*/
+    #footer{
+        display: flex;
+        max-width:100%;
+        background: #539ED6;
+        color:#fff;
+        height: 162px;
+        position: relative;
+        bottom:0;
+    }
+    .footer-inner{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width:75%;
+        margin:0 auto;
+    }
+    #footer ul{
+        list-style: none;
+        padding:0;
+    }
+    #footer>ul:first-child{
+        font-size: .99rem;
+        line-height: 1.2rem;
+        padding:1% 0;
+    }
+    #footer>ul:nth-child(2){
+        font-size: .98rem;
+    }
+    .footer-inner>ul.icon{
+        display: flex;
+        gap:5%;
+    }
+    .footer-inner>ul.icon li img{
+        width:36px;
+        height:36px;
+        display: flex;
+        flex-direction: row;
+    }
+    }
+
+
+
+    
+    /* 767이하일 때 => 모바일 */
+    @media screen and (max-width:767px){
+        /* header */
+    #header{
+        position: relative;
+        display: flex;
+        align-items:center;
+        justify-content: center;
+    }
+    /* #header img{
+        max-width:100px;
+        max-height:auto;
+        position: fixed;
+        top:1%;
+        left:1%;
+    } */
+    #hoverZone {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 50px; 
+        height: 100vh;
+        z-index: 9999;
+    }
+    #toggle{
+        display: none;
+        position: fixed;
+        top:0;
+        left:0;
+        background:url(toggleAboveImage.jpg)no-repeat top,url(toggleUnderImage.jpg)no-repeat bottom;
+        background-size: 280px 200px;
+        background-color: #000;
+        filter:opacity(60%);
+        width:280px;
+        height:100%;
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        justify-content:center; 
+    }
+    #toggle ul {
+        display: flex;          
+        align-items:center;
+        flex-direction: column;
+    }
+    #toggle a{
+        color:#fff;
+    }
+    .lang {
+        position: relative;
+        display: inline-block;
+    }
+    .lang>li, .lang>ul>li>a{
+        color:#fff;
+    }
+    /* 화살표 기본 (아래쪽) */
+    .lang-selected .arrow {
+        display: inline-block;
+        margin: 0;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid #fff; 
+        /* ▼ */
+        transition: transform 0.3s ease;
+    }
+
+    /* hover 시 오른쪽 ▶ */
+    .lang-selected:hover .arrow {
+        transform:rotateX(90deg);
+        border-top: none;
+        border-left: 6px solid #fff;
+        border-bottom: 6px solid transparent;
+        border-top: 6px solid transparent;
+    }
+
+    /* 옵션 숨김 */
+    .lang-options {
+        display: none;
+        position: absolute;
+        top: -13%;
+        left: 103%;
+        background: rgba(0,0,0,0.5);
+        list-style: none;
+        padding: 5px 0;
+        margin: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    .lang-options li {
+        padding: 1px 5px;
+    }
+
+    .lang-options li a {
+        color: #fff;
+        display: block;
+    }
+
+    .lang-options li:hover {
+        background: rgba(0,0,0,0.5);
+    }
+
+    /* hover 시 옵션 표시 */
+    .lang-selected:hover .lang-options {
+        display: block;
+    }
+
+    .lang,.menu{
+        margin:35px auto;
+    }
+    #toggle li{
+        margin:8px auto;
+    }  
+    .menu{
+        width:60%;
+        text-align: center;
+    }
+    .menuItem{
+        border-bottom: 1px solid #fff;
+        width:100%;
+    }
+    .menuItem a{justify-content: center;}
+
+    /* prjContents */
+    #prjContents{
+        position: relative;
+        width: 100%;     
+    }
+    #prjContents>h3{
+        font-size: .8rem;
+        text-align: center;
+    }
+    .prj>ul{
+        background: #ebc797;
+        border-radius: 30px;
+        padding:10px;
+        font-size: .9rem;
+        text-align: center;
+        width:200px;
+        margin:0 auto;
+    }
+    .prj>a>ul{
+        width: 384px;
+    }
+    .prj>a>ul>li{
+        width: 382px;
+        height:auto;
+        /* border:1px solid #000; */
+        position: relative;
+        margin-bottom: 20px;
+    }
+    .prj>a>ul>li>img{
+        display: block;
+        float:left;        
+        margin-right:20px;
+    }
+    .prj:not(.prj3)>a>ul>li>img:hover{
+        scale:150%;
+        position: absolute;
+        top:150px;
+    }
+    .prj>a>ul>li>ul{
+        width:50%;
+        margin:0 auto;
+    }
+    .prj1>a>ul>li>img,.prj2>a>ul>li>img{
+        width: 200px;
+        height: 700px;
+        border: 1px solid #999;
+    }
+    .prj3>a>ul>li>img{
+        width:240px;
+        height: auto;
+        border:1px solid #999;
+    }
+    ul.pjt01text01{
+        /* border:1px solid #999; */
+        display: fixed;
+        width: 250px;
+        height:700px;
+        margin-left: 30px;
+    }
+    .pjt01text01 p{
+        color:#000;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+    .pjt01text01 img{
+        float:left;
+    }
+    .pjt01text01>li{
+        list-style: square;
+        margin:10px auto;
+        font-size: .8rem;
+        width:281px;
+    }
+    .ssootrLogo{
+        width:100px;
+        height:40px;
+        display: block;
+    }
+    .ssootrLogo:hover{
+        scale:210%;
+    }
+    /* ------------- */
+    ul.pjt01text02{
+        /* border:1px solid #999; */
+        display: fixed;
+        width: 250px;
+        height:700px;
+        margin-left: 30px;
+    }
+    .pjt01text02 p{
+        color:#000;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+    .pjt01text02 img{
+        float:left;
+    }
+    .pjt01text02>li{
+        list-style: square;
+        margin:10px auto;
+        font-size: .8rem;
+        width:281px;
+    }    
+    /* ------------ */
+    ul.pjt01text03{
+        /* border:1px solid #999; */
+        display: fixed;
+        width: 250px;
+        height:700px;
+        margin-left: 30px;
+    }
+    .pjt01text03 p{
+        color:#000;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+    .pjt01text03 img{
+        float:left;
+    }
+    .pjt01text03>li{
+        list-style: square;
+        margin:10px auto;
+        font-size: .8rem;
+        width:281px;
+    }
+    /* ------------ */
+    ul.pjt01text04{
+        /* border:1px solid #999; */
+        display: fixed;
+        width: 250px;
+        height:700px;
+        margin-left: 30px;
+    }
+    .pjt01text04 p{
+        color:#000;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+    .pjt01text04 img{
+        float:left;
+    }
+    .pjt01text04>li{
+        list-style: square;
+        margin:10px auto;
+        font-size: .8rem;
+        width:281px;
+    }
+    /* ======================= */
+    ul.pjt02text{
+        /* border:1px solid #999; */
+        display: fixed;
+        width: 250px;
+        height:700px;
+        margin-left: 30px;
+    }
+    .pjt02text p{
+        color:#000;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+    .pjt02text img{
+        float:left;
+    }
+    .pjt02text>li{
+        list-style: square;
+        margin:10px auto;
+        font-size: .8rem;
+        width:281px;
+    }
+    .ddkcLogo{
+        width:100px;
+        height:40px;
+        display: block;
+    }
+    .ddkcLogo:hover{
+        scale:210%;
+    }    
+    /* .prj>a>ul>li:first-child img{
+        display: block;
+        float:left;
+    } */
+    .prj2>a>ul>li>ul>.pjt02hpimg{
+        /* list-style: none; */
+        display: none;
+    }
+    /* .pjt02hpimg>li>img{
+        width: 75px;
+        height:180px;
+        margin:0 3px;
+        display: block;
+    } */
+    .pjt02hptext{
+        /* list-style: square; */
+        display: none;
+    }
+    /* .pjt02hptext>li{
+        width: 50px;
+        float:left;
+        margin-left: 3px;
+    } */
+    /* ======================= */
+    ul.pjt03text{
+        /* border:1px solid #999; */
+        display: fixed;
+        width: 370px;
+        height: auto;
+        float:left; 
+        padding-left: 20px;
+    }
+    .pjt03text p{
+        color:#000;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+    .pjt03text>li{        
+        list-style: square;  
+        margin:10px;
+        font-size: .8rem;
+        width: 343px;
+    }
+    .ddmLogo{
+        width:50px;
+        height:50px;
+        display: block;
+        float:left;
+    }
+    .ddmLogo:hover{
+        scale:210%;
+    }
+    .prj3>a>ul>li{
+        width:100%;
+        height: 100%;      
+    }
+    .prj3>a>ul>li>img{
+        display: block;
+        float:left;        
+        width:384px;
+        height:auto;
+    }
+
+    /* footer style*/
+    .footer-inner{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width:100%;
+        margin:0 auto; 
+        padding:0 20px;
+        background: #539ED6;
+        color:#fff;
+        height: 130px;    
+    }
+    #footer ul{
+        list-style: none;
+    }
+    #footer ul:first-child{
+        font-size: .7rem;
+        line-height: 1.2rem;
+        padding:3% 0;
+        flex:4;
+    }
+    #footer ul:nth-child(2){
+        font-size: .6rem;
+        flex:4;
+    }
+    .footer-inner>ul.icon{
+        display: flex;
+        flex:2;
+        margin-left: 20px;
+    }
+    .footer-inner>ul.icon li img{
+        width:20px;
+        height:20px;
+        display: flex;
+        flex-direction: row;
+    }
+    }
+</style>
+<body>
+<div id="prjWrap">
+    <div id="hoverZone" aria-hidden="true"></div>
+        <header id="header">
+        <!-- <h1>
+            <a href="index.html">
+            <img src="Artboard 1@3x.png" alt="메인 로고" class="logo">
+            </a>
+        </h1> -->
+        <div id="toggle">
+            <ul class="lang">
+                <li class="lang-selected">LANG <span class="arrow"></span></li>
+            <ul class="lang-options">
+                <li><a href="#">KOR</a></li>
+                <li><a href="#">CHN</a></li>
+                <li><a href="#">ENG</a></li>
+            </ul>
+            </ul>
+            <ul class="menu">
+                <li id="menu01" class="menuItem">
+                    <a href="index.html">메인</a> 
+                </li>
+                <li id="menu02" class="menuItem">
+                    <a href="portfolio1.html">인적사항</a>
+                </li>
+                <li id="menu03" class="menuItem">
+                    <a href="portfolio2.html">스킬</a>
+                </li>
+                <li id="menu04" class="menuItem">
+                    <a href="portfolio3.html">프로젝트</a>
+                </li>
+            </ul>
+        </div>
+        </header>
+    </div>
+
+    <div id="prjContents">
+        <h3>해당 프로젝트를 클릭하면 해당 프로젝트 사이트로 바로 연결됩니다.<br>(단, 프로젝트01은 제외)</h3>
+        <div class="prj prj1">          
+            <ul>
+                <li>명칭:프로젝트01</li>
+                <li>회사:3355여행</li>
+                <li>기여도:본인100%</li>
+                <li>기간:202506~202507</li>
+            </ul>
+            <a href="#">
+                <ul>
+                    <li>
+                        <img src="project011.png" alt="">
+                        <ul class="pjt01text01">
+                            <li>                                
+                                <p>메인 로고: <img src="3355tr logo.png" alt="" class="ssootrLogo"></p>                                                             
+                            </li>
+                            <li>메인 이미지: 선형 그라데이션 효과</li>
+                            <li>날씨 정보: 일러스트의 rotate효과로 태양을 그리고 arrange효과를 사용하여 구름 뒤에 숨겨진 태양으로 흐린 날을 표시<br>nth-child(odd)와 (even)을 사용하여 홀짝으로 기온에 색상을 줌</li>
+                            <li>달력 정보: Canva사이트에서 심플한 달력을 수정하여 추가</li>
+                            <li>가이드 정보: 저가 제일 좋아하는 남자 연예인으로 장식해 보았음</li>
+                            <li>여행후기: 저가 인상에 남는 관광지 북촌, 해인사, 설악산 등으로 예를 들었음</li>
+                            <li>구글지도: 구글 사이트에서 iframe으로 가져왔음</li>
+                            <li>풋터: 풋터내용과 로고 및 아이콘들은 하단으로 배치하였고 카카오톡과 위챗은 하단 오른쪽으로 fixed하였음</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <img src="project012.png" alt="">
+                        <ul class="pjt01text02">
+                            <li>메인 페이지 의료관광 중심지의 첫 번째인 서울시를 클릭하였다고 가정했을 때의 서울시를 예로 들어 서브페이지를 작성해 보았음</li>
+                            <li>의료관광 중심지인 만큼 의료가 군집해 있는 동남권을 예로 들어 작성해 보았음</li>
+                            <li>의료관광은 하루 이틀만 소요되는 것이 아닌 적어도 1주일을 한국에 머물러 있는 것이 소요되는 것이기에 강남,강동 뿐만 아니라 지어는 서울에서 3시간 여정인 남이섬까지도 포함되게끔 꾸며 보았음</li>
+                            <li>1차 프로젝트인 만큼 일단은 flex같은 요소보다는 기본적인 float요소를 사용하여 서브페이지를 작성해 보았음</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <img src="project013.png" alt="">
+                        <ul class="pjt01text03">
+                            <li>로그인 페이지는 태극기의 컬러를 본 따서 색상을 입히게 되었음</li>
+                            <li>실제는 너비를 좀 넓게 잡았는데 축소되니 시각상에 약간 불편함이 생길 수도 있음</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <img src="project014.png" alt="">
+                        <ul class="pjt01text04">
+                            <li>회원가입 페이지도 태극기의 컬러를 본 따서 색상을 입히게 되었음</li>
+                            <li>이것 또한 실제너비를 좀 넓게 잡아 축소되니 시각상 약간 불편함이 생길 수 있음</li>
+                        </ul>
+                    </li>
+                </ul>
+            </a>
+        </div>
+        <div class="prj prj2">            
+            <ul>
+                <li>명칭:프로젝트02</li>
+                <li>회사:대동막걸리</li>
+                <li>기여도:본인95%+인터넷 양식</li>
+                <li>기간:202507~202508</li>
+            </ul>
+            <a href="#">
+                <ul>
+                    <li>
+                        <img src="project021.png" alt="">
+                        <ul class="pjt02text">
+                            <li>                                
+                                <p>메인 로고: <img src="logoblack1.png" alt="" class="ddkcLogo"></p>                                                             
+                            </li>
+                            <li>메인 이미지 프레임은 css로 붓 효과를 줄 수 없어 일러스트에서 이미지 프레임에 붓 효과를 준 다음 그 이미지를 가져다 작성한 것임</li>                           
+                            <li>믹솔로지파트와 페어링 푸드파트는 슬라이드 효과를 주었음</li>
+                            <li>프로젝트2차인 만큼 figma로 선 디자인한 후에 그에 참조하여 코드를 작성하였음</li>
+                            <ul class="pjt02hpimg">
+                                <li><img src="hp00.png" alt=""></li>
+                                <li><img src="hp01.png" alt=""></li>
+                            </ul>  
+                            <ul class="pjt02hptext">
+                                <li>프로젝트2차에는 피그마로 휴대폰 크기에 맞춰 홈버튼, 되돌아가기버튼, 토글버튼 등을 추가하여 작성하였음</li>
+                                <li>또 흔히 말하는 햄버거 메뉴기능을 추가하여 토글메뉴가 활성화 되게 작성하였음</li>
+                            </ul>                         
+                        </ul>
+                    </li>
+                    <li>
+                        <img src="project023.png" alt="">
+                        <ul class="pjt02text">
+                            <li>좌우양쪽으로 이미지와 텍스트를 교차하면서 작성했음</li>
+                            <ul class="pjt02hpimg">
+                                <li><img src="hp02.png" alt=""></li>
+                            </ul>  
+                            <ul class="pjt02hptext">
+                                <li>휴대폰 크기로는 화면 크기에 데스크탑과 차이가 있어 좌우양쪽이 아닌 위아래 양쪽으로 이미지와 텍스트를 작성했음</li>
+                                <li>메인로고를 클릭하면 메인페이지로 변환되고 화면마다 슬라이드 형식으로 작성하였음</li>
+                            </ul>                         
+                        </ul>
+                    </li>
+                    <li>
+                        <img src="project024.png" alt="">
+                        <ul class="pjt02text">
+                            <li>구성상으로는 위의 파트인 양조과정과 큰 차이가 없음</li>
+                            <ul class="pjt02hpimg">
+                                <li><img src="hp03.png" alt=""></li>
+                            </ul>  
+                            <ul class="pjt02hptext">
+                                <li>휴대폰 크기로도 구성상으로는 위의 파트인 양조과정과 큰 차이가 없음</li>
+                            </ul>                         
+                        </ul>
+                    </li>
+                    <li>
+                        <img src="project025.png" alt="">
+                        <ul class="pjt02text">
+                            <li>구성상으로는 위의 파트인 양조과정과 큰 차이가 없음</li>
+                            <ul class="pjt02hpimg">
+                                <li><img src="hp04.png" alt=""></li>
+                            </ul>  
+                            <ul class="pjt02hptext">
+                                <li>휴대폰 크기로도 구성상으로는 위의 파트인 양조과정과 큰 차이가 없음</li>
+                            </ul>                      
+                        </ul>
+                    </li>
+                </ul>
+            </a>
+        </div>
+        <div class="prj prj3">            
+            <ul>
+                <li>명칭:프로젝트03</li>
+                <li>회사:대동해운</li>
+                <li>기여도:본인90%+챗gpt</li>
+                <li>기간:202508~202509</li>
+            </ul>
+            <a href="#">
+                <ul>
+                    <li>
+                        <img src="project03main1.png" alt="">
+                        <ul class="pjt03text">
+                            <li>                                
+                                <p>메인 로고: <img src="logo.png" alt="" class="ddmLogo"></p>                                                             
+                            </li>
+                            <li>메인 페이지는 영상, 주제목과 부제목으로 장식해 보았음</li>                           
+                            <li>기존의 1,2차 프로젝트와 다르게 메뉴바를 화면의 왼쪽으로 위치하여 마우스를 hover하면 나타나게 js기능을 조금 사용하였음</li>
+                            <li>메뉴바의 언어선택에는 허버하면 선택항목이 나타나게 하였음</li>
+                            <li>프로젝트1차에서 로그인과 회원가입을 작성했었기에 이번에는 생략하였음</li>
+                            <li>주요 메뉴에는 하단에 밑줄을 추가하여 강조효과를 보탬</li>
+                            <li>메뉴바에 opacity만 주면 밋밋해 보여 위 아래에 관련 이미지를 추가하였음</li>                                                  
+                        </ul>
+                    </li>
+                    <li>
+                        <img src="project03main2.png" alt="">
+                        <ul class="pjt03text">
+                            <li>취급품 4종을 기존 프로젝트처럼 고정시킨 것이 아닌 js요소를 사용하여 스크롤하면 하나씩 나타나게 작성하였음</li>
+                            <li>지하철 노선도에 로케이션 아이콘을 하나 추가하여 이미지에 blur와 shadow효과를 추가하여 작성하였음</li>
+                        </ul>
+                    <li> 
+                    <li>
+                        <img src="project03main3.png" alt="">
+                        <ul class="pjt03text">
+                            <li>지하철과 자가용으로 오시는 약도를 이미지 파일이 아닌 코딩으로 작성하였음</li>
+                            <li>그러나 뒤의 것을 탭하였다가 다시 돌아와서 지하철을 탭하면 글자가 원 위치에서 이탈하는 문제점이 발생함</li>                            
+                        </ul>
+                    <li> 
+                    <li>
+                        <img src="project030101.png" alt="">
+                        <ul class="pjt03text">
+                            <li>보충하여 말하자면 메뉴바의 언어선택은 허버할 때 세모모양이 회전하는 기능을 추가했음</li>
+                            <li>메뉴를 허버했을 때 선택된 메뉴에다 shadow,brightness를 사용하였고 본문 내용에는 grid,opacity와 inset으로 작성하였음</li>
+                            <li>본문 내용 중의 일부를 선택하면 그림자, 컬러 효과를 주었기에 선택된 요소를 한 번에 알 수 있음</li>
+                        </ul>
+                    <li> 
+                    <li>
+                        <img src="project030301.png" alt="">
+                        <ul class="pjt03text">
+                            <li>이 부분은 메인 페이지의 취급품 부분의 상세 페이지이기도 함</li>
+                            <li>기본적으로는 석유제품이 선택되어 있어 하단에 서브 이미지들로 석유제품들이 나열됨</li>
+                            <li>다른 취급품을 허버하면 이에 따른 다른 물품들이 5개씩 나열되어 나타남</li>
+                            <li>이 부분은 js효과를 사용하여 작성하였음</li>
+                        </ul>
+                    <li>
+                    <li>
+                        <img src="project030401.png" alt="">
+                        <ul class="pjt03text">
+                            <li>이 페이지는 항만에 대한 페이지임</li>
+                            <li>기본적으로는 이미지들의 saturate를 0으로 하여 그레이효과로 작성하였음</li>
+                            <li>이미지의 기본 크기로 지정하였음</li>
+                        </ul>
+                    <li>
+                    <li>
+                        <img src="project030402.png" alt="">
+                        <ul class="pjt03text">
+                            <li>이미지에다 마우스를 허버했을 때 saturate가 100%로 변경되면서 그레이효과에서 기존의 컬러로 되게 하였음</li>
+                            <li>이미지에다 마우스를 허버하면 기본 크기에서 scale효과로 인하여 이미지가 약간 커짐</li>
+                        </ul>
+                    <li>                         
+                </ul>
+            </a>
+        </div>
+    </div> 
+
+    <footer id="footer">
+        <div class="footer-inner">
+            <ul>
+                <li>성명: 최영윤</li>
+                <li>휴대폰번호: 010-2386-8883</li>
+                <li>이메일: youngyun1181@gmail.com</li>
+            </ul>
+            <ul>
+                <li class="ftTextMid">COPYRIGHT©최영윤 ALL RIGHT RESERVED.</li>
+            </ul>
+            <ul class="icon">
+                <li><a href="https://www.facebook.com/choeyeong.yun.762864"><img src="facebook-icon-lg.png" alt="페이스북"></a></li>
+            </ul>
+        </div>      
+    </footer>
+</div>
+    <script>
+    $(function () {
+      var $toggle = $("#toggle");
+      var $zone = $("#hoverZone");
+      $toggle.hide();
+      $zone.on("mouseenter", function () {
+        $toggle.stop(true, true).fadeIn(120);
+      });
+      $toggle.on("mouseleave", function () {
+        $toggle.stop(true, true).fadeOut(120);
+      });
+    });
+    // --------------
+    $(function(){
+        $(".lang-options").hide();
+        $(".lang").hover(
+            function(){ // mouseenter
+                $(this).find(".lang-options").stop(true,true).slideDown(200);
+            },
+            function(){ // mouseleave
+                $(this).find(".lang-options").stop(true,true).slideUp(200);
+            }
+        );
+    });
+    </script>
+  
+ 
+</body>
+</html>

@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>포트폴리오</title>
+  <script src="jquery-1.9.1.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
+  <style>
+    @font-face {
+      font-family: "Noto Sans", sans-serif;
+      src: url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital@0;1&display=swap');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Noto Sans KR", sans-serif;
+      src: url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+      font-weight: 400;
+      font-style: normal;
+    }
+    *{margin:0;padding:0;}
+    * ul{list-style: none;}
+    * a{text-decoration: none;}
+    html,body {overflow-x: hidden;}
+    body{overflow-y: hidden;}
+
+  /* 1024 이상일 때  => 데스크탑 */
+  @media screen and (min-width:1024px) {
+  /* header */
+  #header{
+    position: relative;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+  }
+  /* #header img{
+    max-width:100px;
+    max-height:auto;
+    position: fixed;
+    top:1%;
+    left:1%;
+  } */
+  #hoverZone {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50px; 
+    height: 100vh;
+    z-index: 9999;
+  }
+  #toggle{
+    display: none;
+    position: fixed;
+    top:0;
+    left:0;
+    background:url(toggleAboveImage.jpg)no-repeat top,url(toggleUnderImage.jpg)no-repeat bottom;
+    background-size: 280px 200px;
+    background-color: #000;
+    filter:opacity(60%);
+    width:280px;
+    height:100%;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    justify-content:center; 
+  }
+  #toggle ul {
+    display: flex;          
+    align-items:center;
+    flex-direction: column;
+  }
+  #toggle a{
+    color:#fff;
+  }
+  .lang {
+    position: relative;
+    display: inline-block;
+  }
+  .lang>li, .lang>ul>li>a{
+    color:#fff;
+  }
+  /* 화살표 기본 (아래쪽) */
+  .lang-selected .arrow {
+    display: inline-block;
+    margin: 0;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #fff; 
+    /* ▼ */
+    transition: transform 0.3s ease;
+  }
+
+  /* hover 시 오른쪽 ▶ */
+  .lang-selected:hover .arrow {
+    transform:rotateX(90deg);
+    border-top: none;
+    border-left: 6px solid #fff;
+    border-bottom: 6px solid transparent;
+    border-top: 6px solid transparent;
+  }
+
+  /* 옵션 숨김 */
+  .lang-options {
+    display: none;
+    position: absolute;
+    top: -13%;
+    left: 103%;
+    background: rgba(0,0,0,0.5);
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  .lang-options li {
+    padding: 1px 5px;
+  }
+
+  .lang-options li a {
+    color: #fff;
+    display: block;
+  }
+
+  .lang-options li:hover {
+    background: rgba(0,0,0,0.5);
+  }
+
+  /* hover 시 옵션 표시 */
+  .lang-selected:hover .lang-options {
+    display: block;
+  }
+
+  .lang,.menu{
+    margin:35px auto;
+  }
+  #toggle li{
+    margin:8px auto;
+  }  
+  .menu{
+    width:60%;
+    text-align: center;
+  }
+  .menuItem{
+    border-bottom: 1px solid #fff;
+    width:100%;
+  }
+  .menuItem a{justify-content: center;}
+
+  /* mainContents */
+  #mainContents{
+    width: 100vw;
+    height: inherit;
+  }
+  .mainImage{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    z-index: -1;         
+  }
+  .mainImage img{
+    width: 100%;
+    height: 920px;
+    object-fit: cover;
+  }
+  .imageText{
+    position: absolute; 
+    top: 50%;       
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(0,0,0,0.7);
+  }
+  .imageText h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .imageText h3{
+    width:700px;
+    text-wrap: wrap;
+    margin:10px auto;
+  }
+  /* ------------- */
+  .story{
+    position: relative;
+    top: 0;
+    left: 0;
+    width:100%;
+    height:1120px; 
+    overflow: hidden;
+  }
+  .story img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .story p{
+    position: absolute;
+    top: 50%;           
+    right: -15%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: left;
+    text-shadow: 0 0 10px rgba(0,0,0,0.7);
+    font-size: 1.2rem;
+    text-wrap: wrap;
+    width:40%;
+  }
+  /* ---------------- */
+  #contents {
+    overflow: hidden;
+    width:100%;
+    height:auto;
+  }
+  .conItem {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .conItemImg:hover{
+    filter:drop-shadow(3px 3px 5px #0b005c);
+    filter:brightness(3px 3px 5px #0b005c);
+  }
+  .conItemImg {      
+    margin:50px 20px;
+  }
+  #mainCon .i1 .art1{
+    background: url(UIUX.jpg)no-repeat 0 0;
+    border-radius: 30px;
+    background-size: cover;
+    background-position: 50%;
+    width:260px;
+    height:250px;
+  }
+  #mainCon .i2 .art2{
+    background: url(graphic.png)no-repeat 0 0;
+    border-radius: 30px;
+    background-size: cover;
+    background-position: 50%;
+    width:260px;
+    height:250px;
+  }
+  #mainCon .i3 .art3{
+    background: url(videoEditing.jpg)no-repeat 0 0;
+    border-radius: 30px;
+    background-size: cover;
+    background-position: 50%;
+    width:260px;
+    height:250px;
+  }
+  #mainCon .i4 .art4{
+    background: url(OA.png)no-repeat 0 0;
+    border-radius: 30px;
+    background-size: cover;
+    background-position: 50%;
+    width:260px;
+    height:250px;
+  }
+  .conItemImg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .conItemImg a{
+    color:orangered;
+    filter:drop-shadow(5px 5px 10px yellow);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ----------------- */
+  .daelim{
+    width:1150px;
+    margin:30px auto;
+  }
+  .daelimStn{
+    width:1150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin:30px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  .daelimStn>iframe{width:100%;height:450px;}
+  .daelimStn p{
+    display: flex;              
+    align-items: flex-start;    
+    gap: 8px;                  
+    width: 400px;
+    margin: 30px 50px;
+    font-size: 1.2rem;
+    line-height: 1.5; 
+  }
+  .daelimStn p span {
+    flex-shrink: 0;             /* 아이콘 크기 유지 */
+  }
+  .daelimStn p img{
+    width: 15px;
+    height: 15px;
+    display: block;
+    margin-top: 4px; 
+  }
+  .daelimAround{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    flex-direction:column;
+    margin: 30px auto;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  .daelimAround img{
+    width:380px;
+    height: 300px;
+    align-items:center;
+    justify-content:space-around;
+    flex-direction: row;
+    column-gap:20px;
+  }
+  .dlSlider {
+    position: relative;
+    width: 1140px;  /* 3개 이미지가 동시에 보이도록 */
+    height: 300px;
+    overflow: hidden;
+    margin:0 20px;
+    display: flex;
+    animation: slide 18s infinite linear;
+  }
+  .imagesSlides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 33.33%; /* 3개씩 보이게 */
+    flex-shrink: 0;
+  }
+  .imagesSlides img {
+    width: 380px;   /* 1140px / 3 = 380px */
+    height: 250px;
+    object-fit: cover;
+    flex-shrink: 0;
+    margin:0 auto;
+  }
+  @keyframes imagesSlides {
+    0% {
+      transform: translateX(0);
+    }
+    33.33% {
+      transform: translateX(-33.33%);
+    }
+    66.66% {
+      transform: translateX(-66.66%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  /* 네비게이션 버튼 */
+  .prev, .next {
+    position: absolute;
+    top: 41%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  .prev { left: 10px; }
+  .next { right: 10px; }
+
+  /* ----------- */
+  .dlText{
+    width:1150px;
+    height:auto;
+    text-align: center;
+    margin-bottom:40px;
+  }
+  .dlText img{
+    width:15px;
+    height:15px;
+  }
+
+  /* footer style*/
+  #footer{
+    display: flex;
+    max-width:100%;
+    background: #539ED6;
+    color:#fff;
+    height: 182px;
+  }
+  .footer-inner{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width:75%;
+    margin:0 auto;      
+  }
+  #footer ul{
+    list-style: none;
+    padding:0;
+  }
+  #footer>ul:first-child{
+    font-size: .99rem;
+    line-height: 1.2rem;
+    padding:1% 0;
+  }
+  #footer>ul:nth-child(2){
+    font-size: .98rem;
+  }
+  .footer-inner>ul.icon{
+    display: flex;
+    gap:5%;
+  }
+  .footer-inner>ul.icon li img{
+    width:36px;
+    height:36px;
+    display: flex;
+    flex-direction: row;
+  }
+  }
+  /* 767이하일 때 => 모바일 */
+  @media screen and (max-width:767px){
+  /* header */
+  #header{
+    position: relative;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+  }
+  /* #header img{
+    max-width:100px;
+    max-height:auto;
+    position: fixed;
+    top:1%;
+    left:1%;
+  } */
+  #hoverZone {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50px; 
+    height: 100vh;
+    z-index: 9999;
+  }
+  #toggle{
+    display: none;
+    position: fixed;
+    top:0;
+    left:0;
+    background:url(toggleAboveImage.jpg)no-repeat top,url(toggleUnderImage.jpg)no-repeat bottom;
+    background-size: 280px 200px;
+    background-color: #000;
+    filter:opacity(60%);
+    width:280px;
+    height:100%;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    justify-content:center; 
+  }
+  #toggle ul {
+    display: flex;          
+    align-items:center;
+    flex-direction: column;
+  }
+  #toggle a{
+    color:#fff;
+  }
+  .lang {
+    position: relative;
+    display: inline-block;
+  }
+  .lang>li, .lang>ul>li>a{
+    color:#fff;
+  }
+  /* 화살표 기본 (아래쪽) */
+  .lang-selected .arrow {
+    display: inline-block;
+    margin: 0;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #fff; 
+    /* ▼ */
+    transition: transform 0.3s ease;
+  }
+
+  /* hover 시 오른쪽 ▶ */
+  .lang-selected:hover .arrow {
+    transform:rotateX(90deg);
+    border-top: none;
+    border-left: 6px solid #fff;
+    border-bottom: 6px solid transparent;
+    border-top: 6px solid transparent;
+  }
+
+  /* 옵션 숨김 */
+  .lang-options {
+    display: none;
+    position: absolute;
+    top: -13%;
+    left: 103%;
+    background: rgba(0,0,0,0.5);
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  .lang-options li {
+    padding: 1px 5px;
+  }
+
+  .lang-options li a {
+    color: #fff;
+    display: block;
+  }
+
+  .lang-options li:hover {
+    background: rgba(0,0,0,0.5);
+  }
+
+  /* hover 시 옵션 표시 */
+  .lang-selected:hover .lang-options {
+    display: block;
+  }
+
+  .lang,.menu{
+    margin:35px auto;
+  }
+  #toggle li{
+    margin:8px auto;
+  }  
+  .menu{
+    width:60%;
+    text-align: center;
+  }
+  .menuItem{
+    border-bottom: 1px solid #fff;
+    width:100%;
+  }
+  .menuItem a{justify-content: center;}
+
+  /* mainContents */
+  #mainContents{
+    width: 100vw;
+    height: inherit;
+  }
+  .mainImage{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    z-index: -1;         
+  }
+  .mainImage img{
+    width: 100%;
+    height: auto;
+    margin:0 auto;
+    object-fit: cover;
+  }
+  .imageText{
+    position: absolute; 
+    top: 50%;       
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(0,0,0,0.7);
+  }
+  .imageText h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .imageText h3{
+    font-size: 1.2rem;
+    width:300px;
+    text-wrap: wrap;
+    margin:10px auto;
+  }
+  /* ------------- */
+  .story{
+    position: relative;
+    top: 0;
+    left: 0;
+    width:100%;
+    height:auto; 
+    overflow: hidden;
+  }
+  .story img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  .story p{
+    position: absolute;
+    top: 50%;           
+    right: -15%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: left;
+    text-shadow: 0 0 10px rgba(0,0,0,0.7);
+    font-size: .9rem;
+    text-wrap: wrap;
+    width:40%;
+  }
+  /* ---------------- */
+  #contents {
+    overflow: hidden;
+    width:100%;
+    height:auto;
+  }
+  .conItem {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .conItemImg:hover{
+    filter:drop-shadow(3px 3px 5px #0b005c);
+    filter:brightness(3px 3px 5px #0b005c);
+  }
+  .conItemImg {      
+    margin:30px 10px;
+  }
+  #mainCon .i1 .art1{
+    background: url(UIUX.jpg)no-repeat 0 0;
+    border-radius: 30px;
+    background-size: cover;
+    background-position: 50%;
+    width:80px;
+    height:80px;
+  }
+  #mainCon .i2 .art2{
+    background: url(graphic.png)no-repeat 0 0;
+    border-radius: 30px;
+    background-size: cover;
+    background-position: 50%;
+    width:80px;
+    height:80px;
+  }
+  #mainCon .i3 .art3{
+    background: url(videoEditing.jpg)no-repeat 0 0;
+    border-radius: 30px;
+    background-size: cover;
+    background-position: 50%;
+    width:80px;
+    height:80px;
+  }
+  #mainCon .i4 .art4{
+    background: url(OA.png)no-repeat 0 0;
+    border-radius: 30px;
+    background-size: cover;
+    background-position: 50%;
+    width:80px;
+    height:80px;
+  }
+  .conItemImg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .conItemImg a{
+    color:orangered;
+    filter:drop-shadow(5px 5px 10px yellow);
+    font-size: 1.2rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ----------------- */
+  .daelim{
+    width:385px;
+    margin:30px auto;
+  }
+  .daelimStn{
+    width:385px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: left;
+    margin:30px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  .daelimStn>iframe{width:385px;height:auto;}
+  .daelimStn p{
+    display: flex;              
+    align-items: flex-start;   
+    width: 350px;
+    margin: 10px;
+    font-size: .9rem;
+    line-height: 1.5; 
+    text-align: center;
+  }
+  .daelimStn p span {
+    flex-shrink: 0;             /* 아이콘 크기 유지 */
+  }
+  .daelimStn p img{
+    width: 10px;
+    height: 10px;
+    display: block;
+    margin-top: 4px; 
+  }
+  .daelimAround{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    flex-direction:column;
+    margin: 30px auto;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  .daelimAround img{
+    width:390px;
+    height: 300px;
+    align-items:center;
+    justify-content:space-around;
+    flex-direction: row;
+    column-gap:20px;
+  }
+  .dlSlider {
+    position: relative;
+    width: 1155px;  /* 3개 이미지가 동시에 보이도록 */
+    height: 300px;
+    overflow: hidden;
+    margin:0 20px;
+    display: flex;
+    animation: slide 18s infinite linear;
+  }
+  .imagesSlides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 33.33%; /* 3개씩 보이게 */
+    flex-shrink: 0;
+  }
+  .imagesSlides img {
+    width: 385px;   /* 1155px / 3 = 385px */
+    height: 250px;
+    object-fit: cover;
+    flex-shrink: 0;
+    margin:0 auto;
+  }
+  @keyframes imagesSlides {
+    0% {
+      transform: translateX(0);
+    }
+    33.33% {
+      transform: translateX(-33.33%);
+    }
+    66.66% {
+      transform: translateX(-66.66%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  /* 네비게이션 버튼 */
+  .prev, .next {
+    position: absolute;
+    top: 100%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  .prev { left: 10px; }
+  .next { right: 10px; }
+
+  /* ----------- */
+  .dlText{
+    width:385px;
+    height:auto;
+    text-align: left;
+    margin-bottom:40px;
+  }
+  .dlText p{font-size:.9rem;}
+  .dlText img{
+    width:10px;
+    height:10px;
+  }
+
+  /* footer style*/
+  #footer{
+    display: flex;
+    background: #539ED6;
+    color:#fff;
+    height: 130px;
+  }
+  .footer-inner{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width:90%;
+    margin:0 auto;     
+  }
+  #footer ul{
+    list-style: none;
+  }
+  #footer ul:first-child{
+    font-size: .7rem;
+    line-height: 1.2rem;
+    padding:3% 0;
+    flex:4;
+  }
+  #footer ul:nth-child(2){
+    font-size: .6rem;
+    flex:5;
+  }
+  .footer-inner>ul.icon{
+    display: flex;
+    flex:1;
+    margin-left: 20px;
+  }
+  .footer-inner>ul.icon li img{
+    width:20px;
+    height:20px;
+    display: flex;
+    flex-direction: row;
+  }
+  }
+</style>
+</head>
+<body>
+  <div id="mainWrap">
+    <div id="hoverZone" aria-hidden="true"></div>
+    <header id="header">
+      <!-- <h1>
+        <a href="index.html">
+          <img src="Artboard 1@3x.png" alt="메인 로고" class="logo">
+        </a>
+      </h1> -->
+      <div id="toggle">
+        <ul class="lang">
+          <li class="lang-selected">LANG <span class="arrow"></span></li>
+          <ul class="lang-options">
+            <li><a href="#">KOR</a></li>
+            <li><a href="#">CHN</a></li>
+            <li><a href="#">ENG</a></li>
+          </ul>
+        </ul>
+        <ul class="menu">
+          <li id="menu01" class="menuItem">
+            <a href="index.html">메인</a> 
+          </li>
+          <li id="menu02" class="menuItem">
+            <a href="portfolio1.html">인적사항</a>
+          </li>
+          <li id="menu03" class="menuItem">
+            <a href="portfolio3.html">스킬</a>
+          </li>
+          <li id="menu04" class="menuItem">
+            <a href="portfolio4.html">프로젝트</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <section id="mainContents">
+      <article class="mainImage mainImg">
+        <img src="bbplayground2.jpg" alt="">
+        <div class="imageText mainImgText">
+          <h1>컴퓨터 === 농구</h1>
+          <h3>초등학교때 저는 처음으로 저만의 386컴퓨터를 소유하게 되었고 이에 빠지게 되었습니다.</h3>
+        </div> 
+      </article>
+      <article class="story">
+        <img src="mainStory.jpg" alt="스토리">
+        <p>
+          초등학교부터 아빠 따라 농구를 쳐온 저는 줄곧 대학교때까지도 체육농구반 반장을 해왔을 만큼 농구를 사랑하고 즐겨왔습니다. 현재도 저는 여전히 농구를 사랑하고 있습니다.
+        </p>
+      </article>
+      <article id="contents">
+        <div id="mainCon" class="conItem">
+            <div class="conItemImg i1"><a href="3_contents-ddm.html#conArt1" class="art1">UIUX</a></div>
+            <div class="conItemImg i2"><a href="3_contents-ddm.html#conArt2" class="art2">Graphic</a></div>
+            <div class="conItemImg i3"><a href="3_contents-ddm.html#conArt3" class="art3">Video Editing</a></div>
+            <div class="conItemImg i4"><a href="3_contents-ddm.html#conArt4" class="art4">OA</a></div>
+        </div>
+      </article>
+      <div class="daelim">
+        <article class="daelimStn">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1582.8287028327788!2d126.89519961561402!3d37.49241020712637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c9e38e612ed35%3A0x39b53f186a58d031!2z64yA66a87JetMTLrsojstpzqtaw!5e0!3m2!1sko!2skr!4v1758008570763!5m2!1sko!2skr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <p>
+            서울특별시 영등포구 대림동에 위치한 차이나타운은 저가 2011년부터 한국에 안착하여 지낸 곳이기도 합니다.
+          </p>
+        </article>
+        <article class="daelimAround">
+          <div class="dlSlider">
+            <div class="imagesSlides">
+              <img src="daerim12thgate.jpg" alt="">
+              <img src="daerim2.jpg" alt="">
+              <img src="daerim3.jpg" alt="">
+              <img src="daerim70mandongpo.jpg" alt="">
+              <img src="daerim8thgate.jpg" alt="">
+              <img src="daerimbokmanru.jpg" alt="">
+              <img src="daerimclean.jpg" alt="">
+              <img src="daerimdawn.jpg" alt="">
+              <img src="daerimmyungjisthos.jpg" alt="">
+            </div>
+            <button class="prev">&#10094;</button>
+            <button class="next">&#10095;</button>
+          </div>          
+          <div class="dlText">
+            <p>
+              대림동은 옛 서울의 중심지라고도 불릴 수 있는 영등포구의 차이나타운이라고 불릴만큼 주요 관광지라고 볼 수 있습니다. 옛 구로공단이 자리잡았던 구로구, 보라매공원이 있는 동작구, 서울대학교가 있는 관악구 등과 인접하여 있습니다.
+            </p>
+            <p>
+              <span><img src="iconStar.png" alt=""></span> 명지성모병원은 대림역 11번 출구 앞 5분 거리에 위치하고 있습니다.
+            </p>
+          </div>        
+        </article>
+      </div>
+    </section>
+    <footer id="footer">
+      <div class="footer-inner">
+        <ul>
+          <li>성명: 최영윤</li>
+          <li>휴대폰번호: 010-2386-8883</li>
+          <li>이메일: youngyun1181@gmail.com</li>
+        </ul>
+        <ul>
+          <li class="ftTextMid">COPYRIGHT©최영윤 ALL RIGHT RESERVED.</li>
+        </ul>
+        <ul class="icon">
+          <li><a href="https://www.facebook.com/choeyeong.yun.762864"><img src="facebook-icon-lg.png" alt="페이스북"></a></li>
+        </ul>
+      </div>      
+    </footer>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+  <script>
+    $(function () {
+      var $toggle = $("#toggle");
+      var $zone = $("#hoverZone");
+      $toggle.hide();
+      $zone.on("mouseenter", function () {
+        $toggle.stop(true, true).fadeIn(120);
+      });
+      $toggle.on("mouseleave", function () {
+        $toggle.stop(true, true).fadeOut(120);
+      });
+    });
+    // -----------------
+    //이미지를 순차적으로 나오게 하기 
+    const ani2 = gsap.timeline();
+    ani2.from("#mainCon .i1", {y: -100, autoAlpha:0, borderRadius: 200})
+        .from("#mainCon .i2", {y: 100, autoAlpha:0, borderRadius: 200})
+        .from("#mainCon .i3", {y: -100, autoAlpha:0, borderRadius: 200})
+        .from("#mainCon .i4", {y: 100, autoAlpha:0, borderRadius: 200})
+
+    ScrollTrigger.create({
+      animation: ani2,
+      trigger: "#mainCon",
+      start: "top top",
+      end: "+=2000",
+      scrub: true,
+      pin: true, 
+      anticipatePin: 1,
+      markers: false
+    });
+    // -------------------
+    $(function(){
+      $(".lang-options").hide();
+      $(".lang").hover(
+        function(){ // mouseenter
+          $(this).find(".lang-options").stop(true,true).slideDown(200);
+        },
+        function(){ // mouseleave
+          $(this).find(".lang-options").stop(true,true).slideUp(200);
+        }
+      );
+    });
+    // -----------------
+    const slides = document.querySelector('.imagesSlides');
+    const slideImages = document.querySelectorAll('.imagesSlides img');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+
+    let index = 0;
+    const visibleSlides = 1; // 한 화면에 보여줄 개수
+    const totalSlides = slideImages.length;
+
+    function showSlide(i) {
+      if (i < 0) {
+        index = totalSlides - visibleSlides;
+      } else if (i > totalSlides - visibleSlides) {
+        index = 0;
+      } else {
+        index = i;
+      }
+      slides.style.transform = `translateX(${-index * (100 / visibleSlides)}%)`;
+    }
+
+    prevBtn.addEventListener('click', () => showSlide(index - 1));
+    nextBtn.addEventListener('click', () => showSlide(index + 1));
+
+    // 자동 슬라이드 (3초마다)
+    setInterval(() => {
+      showSlide(index + 1);
+    }, 3000);
+  </script>
+</body>
+</html>
